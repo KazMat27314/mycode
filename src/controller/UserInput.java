@@ -11,14 +11,16 @@ import java.util.regex.Pattern;
 import model.InventoryInputMenu;
 import model.MarkToMarketMenu;
 import model.StockListMenu;
+import model.TransactionMenu;
 import view.ConsoleOutPut;
 
 public class UserInput {
 
 	/**
 	 * メニュー画面の選択入力補助
-	 * @throws IOException 
-	 * @throws NumberFormatException 
+	 * 
+	 * @throws IOException
+	 * @throws NumberFormatException
 	 * 
 	 * @throws InputMismatchException
 	 */
@@ -26,13 +28,35 @@ public class UserInput {
 		boolean isNum = false;
 		int option = 0;
 		while (!isNum) {
-			//@SuppressWarnings("resource")
-			//Scanner scanner = new Scanner(System.in);
-			
+			// @SuppressWarnings("resource")
+			// Scanner scanner = new Scanner(System.in);
+
 			try {
-				//option = scanner.nextInt();
+				// option = scanner.nextInt();
 				option = Integer.parseInt(getData());
 				if (option < 1 || option > 5) {
+					throw new InputMismatchException();
+				}
+				isNum = true;
+				return option;
+			} catch (InputMismatchException e) {
+				System.out.println("選択肢の数字の中から選んでください");
+			}
+		}
+		return option;
+	}
+
+	public static int getTransactionOption() throws NumberFormatException, IOException {
+		boolean isNum = false;
+		int option = 0;
+		while (!isNum) {
+			// @SuppressWarnings("resource")
+			// Scanner scanner = new Scanner(System.in);
+
+			try {
+				// option = scanner.nextInt();
+				option = Integer.parseInt(getData());
+				if (option < 1 || option > 3) {
 					throw new InputMismatchException();
 				}
 				isNum = true;
@@ -98,7 +122,8 @@ public class UserInput {
 		ConsoleOutPut.stockInfoGetterMenu(5);
 		String coupon = UserInput.getData();
 
-		String masterData = "code="+code + ",name=" + name + ",maturity=" + maturity + ",rate=" + rate + ",coupon=" + coupon;
+		String masterData = "code=" + code + ",name=" + name + ",maturity=" + maturity + ",rate=" + rate + ",coupon="
+				+ coupon;
 		System.out.println("以下の情報がマスターファイルに書き込まれます。");
 		System.out.println(masterData);
 
@@ -113,7 +138,7 @@ public class UserInput {
 		case 1:
 			Pattern p = Pattern.compile("[,\\=]");
 			String[] info = p.split(getBalanceData());
-			InventoryInputMenu IIM = new InventoryInputMenu(info[1],new BigDecimal(info[3]),new BigDecimal(info[5]));
+			InventoryInputMenu IIM = new InventoryInputMenu(info[1], new BigDecimal(info[3]), new BigDecimal(info[5]));
 			break;
 		case 2:
 			MarkToMarketMenu MTMM = new MarkToMarketMenu();
@@ -121,12 +146,24 @@ public class UserInput {
 		case 3:
 			Pattern pa = Pattern.compile("[,\\=]");
 			String[] infoma = pa.split(getMasterData());
-			InventoryInputMenu IIM2 =new InventoryInputMenu(infoma[1],infoma[3],Integer.parseInt(infoma[5]),new BigDecimal(infoma[7]),Integer.parseInt(infoma[9]));
+			InventoryInputMenu IIM2 = new InventoryInputMenu(infoma[1], infoma[3], Integer.parseInt(infoma[5]),
+					new BigDecimal(infoma[7]), Integer.parseInt(infoma[9]));
 			break;
 		case 4:
 			StockListMenu app = new StockListMenu();
-	        app.setVisible(true);
+			app.setVisible(true);
 			break;
+		case 5:
+			ConsoleOutPut.transactionInfoGetterMenu(4);
+			option = getTransactionOption();
+			ConsoleOutPut.transactionPrinter(option);
+			ConsoleOutPut.transactionInfoGetterMenu(1);
+			String code = getData();
+			ConsoleOutPut.transactionInfoGetterMenu(2);
+			BigDecimal transactionAmount = new BigDecimal(getData());
+			ConsoleOutPut.transactionInfoGetterMenu(3);
+			BigDecimal transactionPrice = new BigDecimal(getData());
+			TransactionMenu transactionMenu =new TransactionMenu(code, option,transactionAmount,transactionPrice);
 		default:
 		}
 	}

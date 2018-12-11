@@ -1,6 +1,6 @@
 code=89723, amount=18, bookValue=34, currentValue=32, unrealizedProfit=36
-code=code, amount=544, bookValue=78, currentValue=5, unrealizedProfit=39712
 code=664, amount=null, bookValue=null, currentValue=null, unrealizedProfit=null
 code=ran, amount=null, bookValue=null, currentValue=null, unrealizedProfit=null
 code=43, amount=null, bookValue=null, currentValue=null, unrealizedProfit=null
-code=, amount=32, bookValue=54, currentValue=null, unrealizedProfit=null
+code=, amount=32, bookValue=54, currentValue=54, unrealizedProfit=0
+code=code, amount=null, bookValue=null, currentValue=null, unrealizedProfit=null

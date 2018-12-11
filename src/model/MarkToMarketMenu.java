@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class MarkToMarketMenu {
 	StockList stocklist;
 
-	public MarkToMarketMenu() {
+	public MarkToMarketMenu() throws NumberFormatException, IOException {
 		stocklist = new StockList();
 		for (int i = 0; i < stocklist.size(); i++) {
 			if ((stocklist.get(i).getAmount() == null) && (stocklist.get(i).getBookValue() == null)) {
@@ -20,18 +20,22 @@ public class MarkToMarketMenu {
 				System.out.println(
 						stocklist.get(i).getCode() + ":" + stocklist.get(i).getName() + "の時価を入力してください");
 				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-				try {
-					BigDecimal currentvalue = new BigDecimal(br.readLine());
+				String brstr = br.readLine();
+				while(!(isBigDecimal(brstr))) {
+					System.out.println("ataigahusei");
+					System.out.println(
+							stocklist.get(i).getCode() + ":" + stocklist.get(i).getName() + "の時価を入力してください");
+					brstr = br.readLine();
+					
+				}
+					BigDecimal currentvalue = new BigDecimal(brstr);
 					stocklist.get(i).setCurrentValue(currentvalue);
 					BigDecimal bookvalue = stocklist.get(i).getBookValue();
 					BigDecimal amount = stocklist.get(i).getAmount();
 					BigDecimal unrealizedprofit = amount.multiply(currentvalue.subtract(bookvalue));
 					stocklist.get(i).setUnrealizedProfit(unrealizedprofit);
 					
-				} catch (IOException e) {
-					System.out.print("正しい値を入力してください");
-					e.printStackTrace();
-				}
+				
 			}
 
 		}
@@ -49,5 +53,13 @@ public class MarkToMarketMenu {
 		}
 		*/
 		DaoDB.writeBalance(stocklist);
+	}
+	static public boolean isBigDecimal(String str) throws NumberFormatException{
+		try{
+			new BigDecimal(str);
+			return true;
+		}catch(NumberFormatException e) {
+			return false;
+		}
 	}
 }

@@ -38,7 +38,32 @@ public class ConsoleOutPut {
 			System.out.println("選択肢は１〜４です！");
 		}
 	}
-	
+	/**
+	 * 取引データ入力フォーム
+	 * @param option	債券データの種類
+	 */
+	static public void transactionInfoGetterMenu(int option) {
+		switch (option) {
+		case 1:
+			System.out.println("銘柄コードを入力してください");
+			System.out.print("銘柄コード< ");
+			break;
+		case 2:
+			System.out.println("取引価格を入力してください");
+			System.out.print("取引価格< ");
+			break;
+		case 3:
+			System.out.println("取引数量を入力してください");
+			System.out.print("取引数量< ");
+			break;
+		case 4:
+			System.out.println("1:売り  2:買い　どちらか選択してください");
+			System.out.print("売買< ");
+			break;
+		default:
+			System.out.println("エラー番号: ConsoleOutPut.masterInfoGetter/Option Error");
+		}
+	}
 	/**
 	 * 債券データ入力フォーム
 	 * @param option	債券データの種類
@@ -78,6 +103,19 @@ public class ConsoleOutPut {
 		}
 	}
 	
+	static public void transactionPrinter(int transactionOption) {
+		System.out.println("取引を開始します");
+		switch (transactionOption) {
+		case 1:
+			System.out.println("売り取引をします");
+			break;
+		case 2:
+			System.out.println("購入します");
+			break;
+		default:
+			System.out.println("エラー番号: ConsoleOutPut.errorMessagePrinter");
+		}
+	}
 	static public void errorMessagePrinter(int fileOption) {
 		System.out.println("エラー！　管理者に問い合わせください");
 		switch (fileOption) {

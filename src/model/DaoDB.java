@@ -68,6 +68,35 @@ public class DaoDB {
 	}
 
 	/**
+	 * @管理者権限 トランザクションファイルへの書き込み
+	 */
+	public static void writeTransaction(TransactionList transactionList) {
+		try {
+			TransactionToFile transactionToFile = new TransactionToFile(transactionList);
+			
+			File file = new File("/Users/userthree/eclipse-workspace/StockManagementSystem/src/BrandBalanceFile");
+			
+			if (checkBeforeWritefile(file)) {
+				/*
+				 * FileWriter filewriter = new FileWriter(file, true);
+				 * filewriter.write(stockToFile.toString()); filewriter.write("/n");
+				 * filewriter.close();
+				 */
+				FileWriter fileWriter = new FileWriter(file);
+				PrintWriter pw = new PrintWriter(new BufferedWriter(fileWriter));
+				for (int i = 0; i < transactionToFile.size(); i++) {
+					pw.println(transactionToFile.get(i));
+				}
+				pw.close();
+			} else {
+				System.out.println("エラー！　管理者に問い合わせください");
+				System.out.println("エラー番号:DaoWriter.writeMaster/File Error");
+			}
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+	}
+	/**
 	 * 指定されたファイルが存在していて書き込み可能か確認
 	 * 
 	 * @param file
