@@ -34,7 +34,7 @@ public class UserInput {
 			try {
 				// option = scanner.nextInt();
 				option = Integer.parseInt(getData());
-				if (option < 1 || option > 5) {
+				if (option < 1 || option > 6) {
 					throw new InputMismatchException();
 				}
 				isNum = true;

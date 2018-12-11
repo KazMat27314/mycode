@@ -17,14 +17,18 @@ public class TransactionMenu {
 		StockList stocklist = new StockList();
 		switch (buyOrSell) {
 		// 売り
-		case 1:
-			if (stocklist.findStock(code).getAmount().compareTo(transactionAmount) < 0) {
-				System.out.println("保有している量を超えて売却しようとしています。もう一度選択してください。");
+		case 1:// amountがnullになる
+			if (stocklist.findStock(code).getAmount() == null || stocklist.findStock(code) == null) {
+				System.out.println("入力したコードに対応する銘柄は保有していません");
 			} else {
-				InventoryInputMenu IIM = new InventoryInputMenu(code, transactionAmount.negate(), transactionPrice);
-				System.out.println("売却します");
-				System.out.println("実現損益は" + transactionMoney
-						.subtract(stocklist.findStock(code).getBookValue().multiply(transactionAmount)));
+				if (stocklist.findStock(code).getAmount().compareTo(transactionAmount) < 0) {
+					System.out.println("保有している量を超えて売却しようとしています。もう一度選択してください。");
+				} else {
+					InventoryInputMenu IIM = new InventoryInputMenu(code, transactionAmount.negate(), transactionPrice);
+					System.out.println("売却します");
+					System.out.println("実現損益は" + transactionMoney
+							.subtract(stocklist.findStock(code).getBookValue().multiply(transactionAmount)));
+				}
 			}
 			break;
 		// 買い

@@ -13,6 +13,8 @@ public class ConsoleOutPut {
 		System.out.println("2) 当日の値洗い");
 		System.out.println("3) マスターファイルに追加");
 		System.out.println("4) 保有銘柄残高一覧");
+		System.out.println("5) 取引");
+		
 		System.out.print("選択肢　＞　");
 	}
 	
@@ -34,8 +36,11 @@ public class ConsoleOutPut {
 		case 4:
 			System.out.println("保有銘柄残高一覧を表示します。");
 			break;
+		case 5:
+			System.out.println("取引を開始します。");
+			break;
 		default:
-			System.out.println("選択肢は１〜４です！");
+			System.out.println("選択肢は１〜５です！");
 		}
 	}
 	/**
