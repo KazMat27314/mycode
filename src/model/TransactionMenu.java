@@ -9,6 +9,7 @@ public class TransactionMenu {
 	BigDecimal transactionPrice;
 	BigDecimal transactionAmount;
 	BigDecimal transactionMoney;
+	TransactionList TransactionList;
 
 	public TransactionMenu(String code, int buyOrSell, BigDecimal transactionPrice, BigDecimal transactionAmount)
 			throws IOException {
@@ -18,17 +19,22 @@ public class TransactionMenu {
 		switch (buyOrSell) {
 		// 売り
 		case 1:// amountがnullになる
-			if (stocklist.findStock(code).getAmount() == null || stocklist.findStock(code) == null) {
-				System.out.println("入力したコードに対応する銘柄は保有していません");
-			} else {
-				if (stocklist.findStock(code).getAmount().compareTo(transactionAmount) < 0) {
-					System.out.println("保有している量を超えて売却しようとしています。もう一度選択してください。");
+			try {
+				if (stocklist.findStock(code).getAmount() == null || stocklist.findStock(code) == null) {
+					System.out.println("入力したコードに対応する銘柄は保有していません");
 				} else {
-					InventoryInputMenu IIM = new InventoryInputMenu(code, transactionAmount.negate(), transactionPrice);
-					System.out.println("売却します");
-					System.out.println("実現損益は" + transactionMoney
-							.subtract(stocklist.findStock(code).getBookValue().multiply(transactionAmount)));
+					if (stocklist.findStock(code).getAmount().compareTo(transactionAmount) < 0) {
+						System.out.println("保有している量を超えて売却しようとしています。もう一度選択してください。");
+					} else {
+						InventoryInputMenu IIM = new InventoryInputMenu(code, transactionAmount.negate(),
+								transactionPrice);
+						System.out.println("売却します");
+						System.out.println("実現損益は" + transactionMoney
+								.subtract(stocklist.findStock(code).getBookValue().multiply(transactionAmount)));
+					}
 				}
+			} catch (NullPointerException e) {
+				System.out.println("入力したコードに対応する銘柄は保有していません");
 			}
 			break;
 		// 買い
@@ -39,5 +45,6 @@ public class TransactionMenu {
 		default:
 
 		}
+		writeTransaction(transactionList);
 	}
 }
